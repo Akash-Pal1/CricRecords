@@ -8,7 +8,7 @@ import base64
 basic_url = 'https://www.espncricinfo.com/records'
 
 def get_doc(basic_url):
-    re = requests.get(basic_url)
+    re = requests.get(basic_url,'html.parser')
     doc = bs(re.content)
     doc.prettify()
     return doc
@@ -38,11 +38,11 @@ def get_format_links(doc):
 test_rec , odi_rec , t20_rec = map(list,get_format_links(doc))
 
 def get_format_doc(format_rec):
-    format_doc = bs(requests.get(format_rec[0]).content)
+    format_doc = bs(requests.get(format_rec[0]).content,'html.parser')
     return format_doc
 
 def all_cat(format_rec):
-    format_doc = bs(requests.get(format_rec[0]).content)
+    format_doc = bs(requests.get(format_rec[0]).content,'html.parser')
     all_cat = format_doc.find_all('span',{'class':'ds-text-title-subtle-m ds-font-medium ds-text-typo hover:ds-text-typo-primary ds-block'})
     all_cat =[i.get_text() for i in all_cat][1:-1]
     return all_cat
