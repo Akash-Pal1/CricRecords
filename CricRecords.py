@@ -67,7 +67,9 @@ def get_selected(format_doc):
     return tags_cat_list, tags_cat_links 
 
 def get_allData_page(url):
-    subCat_doc = pd.read_html(url)
+    r = requests.get(url)
+    c = r.content
+    subCat_doc = pd.read_html(c)
     df = pd.DataFrame(subCat_doc[0])
     if df.size == 1:
         return "No Records Found"
